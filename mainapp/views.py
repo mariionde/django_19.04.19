@@ -2,7 +2,8 @@ from django.shortcuts import render
 
 
 def main(request):
-    return render(request, 'mainapp/index.html')
+    context = {'user': {'name': 'иван'}, 'array': [1, 2, 3, 4, 5]}
+    return render(request, 'mainapp/index.html', context)
 
 
 def products(request):

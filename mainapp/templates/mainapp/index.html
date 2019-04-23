@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}
     <title>Главная</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
-</head>
-<body>
-<ul class="menu">
-    <li><a href="/">домой</a></li>
-    <li><a href="/products/">продукты</a></li>
-    <li><a href="/contacts/">контакты</a></li>
-</ul>
-<h1 class="index">Главная</h1>
-</body>
-</html>
+{% endblock %}
+
+
+{% block content %}
+    {% include 'mainapp/includes/inc_menu.html' %}
+    <h1 id="root"></h1>
+    <h1 class="index">Главная</h1>
+    <div>Привет {{ user.name|title }}!</div>
+    <div>{% now 'Y' %}</div>
+    {% if array|length > 0 %}
+        <h1>{{ array.0 }}</h1>
+    {% endif %}
+    {% for item in array %}
+        <h1>{{ item }}</h1>
+    {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
