@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
 import mainapp.views as mainapp
 from django.conf.urls.static import static
 from django.conf import settings
@@ -24,8 +25,8 @@ urlpatterns = [
     path('products/', mainapp.products, name='products'),
     path('contacts/', mainapp.contacts, name='contacts'),
     path('common/', mainapp.common),
+    path('auth/', include('authapp.urls', namespace='auth')),
     path('admin/', admin.site.urls),
-# url(r'^category/(?P<pk>\d+)/$', products, name='category'),
 ]
 
 if settings.DEBUG:

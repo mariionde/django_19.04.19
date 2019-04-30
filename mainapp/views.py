@@ -3,8 +3,7 @@ from .models import Product, ProductCategory
 
 
 def main(request):
-    context = {'user': {'name': 'иван'}, 'array': [1, 2, 3, 4, 5]}
-    return render(request, 'mainapp/index.html', context)
+    return render(request, 'mainapp/index.html')
 
 
 def products(request, pk=None):

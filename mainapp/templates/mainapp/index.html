@@ -8,18 +8,16 @@
 
 {% block content %}
     {% include 'mainapp/includes/inc_menu.html' %}
-    <h1 id="root"></h1>
-    <h1 class="index">Главная</h1>
-    <div>Привет {{ user.name|title }}!</div>
-    <div>{% now 'Y' %}</div>
-    {% if array|length > 0 %}
-        <h1>{{ array.0 }}</h1>
+    <h1>Привет {{ request.user.username|title }}!</h1>
+    {% if request.user.is_anonymous %}
+        <a href="{% url 'auth:login' %}">Войти</a> или <a href="{% url 'auth:register' %}">Зарегистрироваться</a>
     {% endif %}
-    {% for item in array %}
-        <h1>{{ item }}</h1>
-    {% endfor %}
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'auth:edit' request.user.id %}">Редактировать</a>
+        <br>
+        <a href="{% url 'auth:logout' %}">Выйти</a>
+    {% endif %}
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
