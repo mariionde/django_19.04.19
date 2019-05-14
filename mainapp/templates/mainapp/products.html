@@ -7,9 +7,22 @@
 {% block content %}
     {% include 'mainapp/includes/inc_menu.html' %}
     <h1>Продукты</h1>
-    {% for product in products %}
-        <h3>{{ product.name }}</h3>
-        <img src={{ product.image.url }}>
-        <div>{{ product.short_desc }}</div>
-    {% endfor %}
+    <div>Количество продуктов в корзине: {{ basket_quantity }}</div>
+    {% include 'mainapp/includes/inc_category_menu.html' %}
+    <div style="display: flex; flex-wrap: wrap;" class="category-products clearfix">
+        {% for product in products %}
+            <div style="margin: 20px" class="block">
+                  <div class="card" style="width: 18rem;">
+                      <img src="/media/{{ product.image }}" class="card-img-top" alt="product">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ product.name }}</h5>
+                          <p class="card-text">{{ product.short_desc }}</p>
+                          <a href="{% url 'basket:add' product.pk %}">Добавить в корзину</a>
+                          <br>
+                          <a href="{% url 'basket:delete' product.pk %}">Удалить из корзины</a>
+                      </div>
+                  </div>
+              </div>
+        {% endfor %}
+    </div>
 {% endblock %}
