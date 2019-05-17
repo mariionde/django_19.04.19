@@ -8,23 +8,23 @@ def main(request):
 
 
 def products(request, pk=None):
-    basket = []
-    if request.user.is_authenticated:
-        basket = BasketSlot.objects.filter(user=request.user)
-
-    total_quantity = sum(list(map(lambda basket_slot: basket_slot.quantity, basket)))
-
-    if pk:
-        get_object_or_404(ProductCategory, pk=pk)
-        product_objects = Product.objects.filter(category=pk)
-    else:
+    if pk or pk == 0:
         product_objects = Product.objects.all()
-    context = {
-        'categories': ProductCategory.objects.all(),
-        'products': product_objects,
-        'basket_quantity': total_quantity,
-    }
-    return render(request, 'mainapp/products.html', context)
+        if pk:
+            get_object_or_404(ProductCategory, pk=pk)
+            product_objects = Product.objects.filter(category=pk)
+        context = {
+            'categories': ProductCategory.objects.all(),
+            'products': product_objects,
+        }
+        return render(request, 'mainapp/products.html', context)
+    else:
+        hot_product = Product.objects.filter(is_hot=True).first()
+        context = {
+            'categories': ProductCategory.objects.all(),
+            'hot_product': hot_product,
+        }
+        return render(request, 'mainapp/hot_product.html', context)
 
 
 def contacts(request):

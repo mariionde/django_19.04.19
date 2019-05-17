@@ -30,15 +30,20 @@ def login(request):
     title = 'вход'
 
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        next = request.POST.get('next')
 
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('main'))
+            print(next is None)
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return HttpResponseRedirect(reverse('main'))
 
-    context = {'title': title}
+    context = {'title': title, 'next': request.GET.get('next')}
     return render(request, 'authapp/login.html', context)
 
 
